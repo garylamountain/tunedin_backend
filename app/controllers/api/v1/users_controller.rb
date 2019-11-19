@@ -12,8 +12,8 @@ class Api::V1::UsersController < ApplicationController
         # encodedRefresh = issue_token({token: auth_params["refresh_token"]})
         
         user.update(profile_img_url: img_url,access_token: access,refresh_token: refresh)
-        # render json: user.to_json(:except => [:access_token, :refresh_token, :created_at, :updated_at])
-        render json: user.to_json
+        render json: user.to_json(:except => [:access_token, :refresh_token, :created_at, :updated_at])
+        # render json: user.to_json
     end
     
     private

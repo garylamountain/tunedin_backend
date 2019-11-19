@@ -23,19 +23,19 @@ rows = doc.css('div.genre')
 
 genres = rows.map{|genre| genre.text[0..-3]}
 # genreUrls = []
-genres[3664.. genres.length - 1].map do |genre|
-    newGenre = genre
-    newGenre.gsub! ' ', '%20'
-    newGenre.gsub! '+', '%2B'
-    url = 'http://everynoise.com/everynoise1d.cgi?root=' + newGenre + '&scope=all'
-    html = open(url)
-    doc = Nokogiri::HTML(html)
-    iframe = doc.css('a#spotifylink')
-    Playlist.create(name: genre, url: iframe[0].attributes["href"].value)
-    p genre
+# genres[3664.. genres.length - 1].map do |genre|
+#     newGenre = genre
+#     newGenre.gsub! ' ', '%20'
+#     newGenre.gsub! '+', '%2B'
+#     url = 'http://everynoise.com/everynoise1d.cgi?root=' + newGenre + '&scope=all'
+#     html = open(url)
+#     doc = Nokogiri::HTML(html)
+#     iframe = doc.css('a#spotifylink')
+#     Playlist.create(name: genre, url: iframe[0].attributes["href"].value)
+#     p genre
     # genreUrls[genre] = iframe[0].attributes["href"].value
     # p genreUrls[genre]
-end
+# end
 p "------------------------DONE------------------------"
 p "------------------------DONE------------------------"
 p "------------------------DONE------------------------"
