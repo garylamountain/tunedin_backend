@@ -10,7 +10,7 @@ class SpotifyApiAdapter
     def self.body_params
         body = {
             client_id: ENV['CLIENT_ID'],
-            client_secret: ENV["CLIENT_SECRET"]
+            client_secret: ENV['CLIENT_SECRET']
         }
     end
 
@@ -19,7 +19,6 @@ class SpotifyApiAdapter
         body[:grant_type] = "authorization_code"
         body[:code] = code
         body[:redirect_uri] = ENV['REDIRECT_URI']
-
         auth_response = RestClient.post(urls["auth"], body)
         JSON.parse(auth_response.body)
     end

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :playlists
   namespace :api do
     namespace :v1 do
       get 'auth', to: "sessions#create"
