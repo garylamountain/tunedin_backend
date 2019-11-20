@@ -22,6 +22,15 @@ rows = doc.css('div.genre')
 # genres = rows.map{ |genre| [genre.text[0..-3], genre.attributes["preview_url"].value] }.to_h
 
 genres = rows.map{|genre| genre.text[0..-3]}
+Playlist.all.map do |playlist|
+    newPlaylists = playlist.relatedPlaylists
+    newPlaylists.map do |genre|
+        genre.gsub! '%20', ' '
+        genre.gsub! '%2B', '+'
+    end
+    playlist.update({relatedPlaylists: newPlaylists})
+    p playlist
+end
 # genreUrls = []
 # genres[3664.. genres.length - 1].map do |genre|
 #     newGenre = genre
@@ -36,11 +45,7 @@ genres = rows.map{|genre| genre.text[0..-3]}
     # genreUrls[genre] = iframe[0].attributes["href"].value
     # p genreUrls[genre]
 # end
-p "------------------------DONE------------------------"
-p "------------------------DONE------------------------"
-p "------------------------DONE------------------------"
-p "------------------------DONE------------------------"
-p "------------------------DONE------------------------"
+
 # p genreUrls
 
 # genres.forEach do |genre|
@@ -57,6 +62,36 @@ p "------------------------DONE------------------------"
 #         relatedPlaylists.push(genreUrls[rows[24].children.text])
 #     end
 #     Playlist.create(name: genre, url: genreUrls[genre], relatedPlaylists: relatedPlaylists)
+# end
+
+# genres[3684..genres.length - 1].each do |genre|
+    # relatedPlaylists = []
+    # newGenre = genres[130]
+    # newGenre.gsub! ' ', '%20'
+    # newGenre.gsub! '+', '%2B'
+    # url = 'http://everynoise.com/everynoise1d.cgi?root=nottingham%20indie&scope=all'
+    # html = open(url)
+    # doc = Nokogiri::HTML(html)
+    # rows = doc.css('a')
+    # rows[24..43].map do |genre|
+    #     if genre.children.text != "☊"
+    #         name = genre.children.text
+    #         name.gsub! ' ', '%20'
+    #         name.gsub! '+', '%2B'
+    #         relatedPlaylists.push(name)
+    #         relatedPlaylist = Playlist.find_by({name: name})
+    #         relatedPlaylists.push(relatedPlaylist.url)
+    #     end
+    # end
+    # playlist = Playlist.find_by({name: newGenre})
+    # playlist.update({relatedPlaylists: relatedPlaylists})
+    # p playlist
+    # playlist = Playlist.all.find_by(relatedPlaylists: [])
+    # p playlist
+    # newPlaylist = Playlist.all.find_by(name: "pop")
+    # # p newPlaylist
+    # playlist.update({relatedPlaylists: newPlaylist.relatedPlaylists})
+    # p playlist
 # end
 
 # genres[0].gsub! ' ', '%20'
