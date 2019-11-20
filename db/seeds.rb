@@ -21,22 +21,22 @@ rows = doc.css('div.genre')
 
 # genres = rows.map{ |genre| [genre.text[0..-3], genre.attributes["preview_url"].value] }.to_h
 
-genres = rows.map{|genre| genre.text[0..-3]}
-Playlist.all.map do |playlist|
-    newPlaylists = playlist.relatedPlaylists
-    newPlaylists.map do |genre|
-        genre.gsub! '%20', ' '
-        genre.gsub! '%2B', '+'
-    end
-    playlist.update({relatedPlaylists: newPlaylists})
-    p playlist
-end
+# genres = rows.map{|genre| genre.text[0..-3]}
+# Playlist.all.map do |playlist|
+#     newPlaylists = playlist.relatedPlaylists
+#     newPlaylists.map do |genre|
+#         genre.gsub! '%20', ' '
+#         genre.gsub! '%2B', '+'
+#     end
+#     playlist.update({relatedPlaylists: newPlaylists})
+#     p playlist
+# end
 # genreUrls = []
 # genres[3664.. genres.length - 1].map do |genre|
 #     newGenre = genre
 #     newGenre.gsub! ' ', '%20'
 #     newGenre.gsub! '+', '%2B'
-#     url = 'http://everynoise.com/everynoise1d.cgi?root=' + newGenre + '&scope=all'
+#     url = 'http://everynoise.com/everynoise1d.cgi?root=r%26b&scope=all'
 #     html = open(url)
 #     doc = Nokogiri::HTML(html)
 #     iframe = doc.css('a#spotifylink')
@@ -53,7 +53,7 @@ end
 #     newGenre = genre
 #     newGenre.gsub! ' ', '%20'
 #     newGenre.gsub! '+', '%2B'
-#     url = 'http://everynoise.com/everynoise1d.cgi?root=' + newGenre + '&scope=all'
+#     url = 'http://everynoise.com/everynoise1d.cgi?root=r%26b&scope=all'
 #     html = open(url)
 #     doc = Nokogiri::HTML(html)
 #     rows = doc.css('a')
@@ -65,27 +65,28 @@ end
 # end
 
 # genres[3684..genres.length - 1].each do |genre|
-    # relatedPlaylists = []
+    relatedPlaylists = []
     # newGenre = genres[130]
     # newGenre.gsub! ' ', '%20'
     # newGenre.gsub! '+', '%2B'
-    # url = 'http://everynoise.com/everynoise1d.cgi?root=nottingham%20indie&scope=all'
+    # url = 'http://everynoise.com/everynoise1d.cgi?root=australian%20r%26b&scope=all'
     # html = open(url)
     # doc = Nokogiri::HTML(html)
     # rows = doc.css('a')
-    # rows[24..43].map do |genre|
-    #     if genre.children.text != "☊"
-    #         name = genre.children.text
-    #         name.gsub! ' ', '%20'
-    #         name.gsub! '+', '%2B'
-    #         relatedPlaylists.push(name)
-    #         relatedPlaylist = Playlist.find_by({name: name})
+    # rows = ['urban contemporary','hip pop','new jack swing','neo soul','deep pop r&b','quiet storm','dance pop','pop rap','pop','hip hop']
+    # rows.map do |genre|
+    #     if genre != "☊"
+    #         # genre.gsub! ' ', '%20'
+    #         # genre.gsub! '+', '%2B'
+    #         relatedPlaylists.push(genre)
+    #         p genre
+    #         relatedPlaylist = Playlist.find_by({name: genre})
     #         relatedPlaylists.push(relatedPlaylist.url)
     #     end
     # end
-    # playlist = Playlist.find_by({name: newGenre})
-    # playlist.update({relatedPlaylists: relatedPlaylists})
-    # p playlist
+    playlist = Playlist.find_by({name: 'r&b'})
+    playlist.update({url: "spotify:playlist:1rLnwJimWCmjp3f0mEbnkY"})
+    p playlist
     # playlist = Playlist.all.find_by(relatedPlaylists: [])
     # p playlist
     # newPlaylist = Playlist.all.find_by(name: "pop")
