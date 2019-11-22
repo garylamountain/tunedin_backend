@@ -15,7 +15,7 @@ class UserPlaylistsController < ApplicationController
         render json: userplaylist.to_json
     end
 
-    def delete
+    def destroy
         userplaylist = UserPlaylist.find(params[:id])
         userplaylist.destroy
     end
