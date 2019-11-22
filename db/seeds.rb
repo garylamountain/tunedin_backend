@@ -8,16 +8,28 @@
 require 'open-uri'
 require 'nokogiri'
 
+url = 'http://everynoise.com/engenremap.html'
+html = open(url)
+doc = Nokogiri::HTML(html)
+rows = doc.css('div.genre')
+genres = rows.map{ |genre| [genre.text[0..-3], genre.attributes["preview_url"].value] }.to_h
+genres.each do |key, value|
+    playlist = Playlist.find_by(name: key)
+    if playlist
+        playlist.update({preview_url: value})
+    end
+end
+
 # url = 'http://everynoise.com/everynoise1d.cgi?scope=all'
 # html = open(url)
 # doc = Nokogiri::HTML(html)
 # rows = doc.css("tr")
 # p genres = rows.map{|genre| genre.css("a").children.text[1..-1]}
 
-url = 'http://everynoise.com/engenremap.html'
-html = open(url)
-doc = Nokogiri::HTML(html)
-rows = doc.css('div.genre')
+# url = 'http://everynoise.com/engenremap.html'
+# html = open(url)
+# doc = Nokogiri::HTML(html)
+# rows = doc.css('div.genre')
 
 # genres = rows.map{ |genre| [genre.text[0..-3], genre.attributes["preview_url"].value] }.to_h
 
@@ -65,7 +77,7 @@ rows = doc.css('div.genre')
 # end
 
 # genres[3684..genres.length - 1].each do |genre|
-    relatedPlaylists = []
+    # relatedPlaylists = []
     # newGenre = genres[130]
     # newGenre.gsub! ' ', '%20'
     # newGenre.gsub! '+', '%2B'
@@ -84,9 +96,9 @@ rows = doc.css('div.genre')
     #         relatedPlaylists.push(relatedPlaylist.url)
     #     end
     # end
-    playlist = Playlist.find_by({name: 'r&b'})
-    playlist.update({url: "spotify:playlist:1rLnwJimWCmjp3f0mEbnkY"})
-    p playlist
+    # playlist = Playlist.find_by({name: 'r&b'})
+    # playlist.update({url: "spotify:playlist:1rLnwJimWCmjp3f0mEbnkY"})
+    # p playlist
     # playlist = Playlist.all.find_by(relatedPlaylists: [])
     # p playlist
     # newPlaylist = Playlist.all.find_by(name: "pop")

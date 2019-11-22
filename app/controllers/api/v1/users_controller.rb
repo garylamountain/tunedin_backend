@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+
     def create
         
         auth_params = SpotifyApiAdapter.login(params[:code])
@@ -8,12 +9,11 @@ class Api::V1::UsersController < ApplicationController
         refresh = auth_params["refresh_token"]
         img_url = user_data["images"][0] ? user_data["images"][0]["url"] : nil
         
-        # encodedAccess = issue_token({token: auth_params["access_token"]})
-        # encodedRefresh = issue_token({token: auth_params["refresh_token"]})
+        encodedAccess = issue_token(token: auth_params["access_token"])
+        encodedRefresh = issue_token({token: auth_params["refresh_token"]})
         
-        user.update(profile_img_url: img_url,access_token: access,refresh_token: refresh)
+        user.update(profile_img_url: img_url,access_token: encodedAccess,refresh_token: encodedRefresh)
         render json: user.to_json(:except => [:access_token, :refresh_token, :created_at, :updated_at])
-        # render json: user.to_json
     end
     
     private
